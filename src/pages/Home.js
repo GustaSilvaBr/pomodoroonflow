@@ -6,7 +6,7 @@ function Home(){
     return(
         <div id="Home">
             welcome, home
-            <Counter/>
+            <Counter minutes="5"/>
         </div>
     )
 }
