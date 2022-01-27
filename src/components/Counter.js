@@ -10,12 +10,11 @@ function Counter(props) {
         setMinutes(Number.parseInt(props.focusMinutes));
     },[props.focusMinutes]);
 
-
     useEffect(() => { 
         const isTheSecondsCountDownFinished = seconds < 0;
         if(isTheSecondsCountDownFinished){
             discountOneMinute();
-            const isTheMinutesCountDownFinished = minutes < 0;
+            const isTheMinutesCountDownFinished = minutes == 0;
             if(isTheMinutesCountDownFinished){
                 finishCountDown();
             }else{
@@ -40,9 +39,10 @@ function Counter(props) {
     }
 
     function finishCountDown(){
-        clearInterval(secondsIntervalCounting);
         setMinutes(props.focusMinutes);
         setSeconds(0);
+        clearInterval(secondsIntervalCounting);
+        console.log("restarted");
     }
 
     function getNumberCountingAux(number) {
