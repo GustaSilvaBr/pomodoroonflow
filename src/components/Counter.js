@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
 function Counter(props) {
-    const [minutes, setMinutes] = useState(Number.parseInt(props.minutes) || 0);
+    const [minutes, setMinutes] = useState(Number.parseInt(props.focusMinutes));
     const [seconds, setSeconds] = useState(0);
-    const [currentCounting, setCurrentCounting] = useState(getCurrentCounting);
+    
     const [secondsIntervalCounting, setSecondsIntervalCounting] = useState();
 
-    useEffect(() => {
+    useEffect(()=>{
+        setMinutes(Number.parseInt(props.focusMinutes));
+    },[props.focusMinutes]);
+
+
+    useEffect(() => { 
         const isTheSecondsCountDownFinished = seconds < 0;
         if(isTheSecondsCountDownFinished){
             discountOneMinute();
@@ -17,7 +22,6 @@ function Counter(props) {
                 resetSecondsCountDown();
             }
         }
-        setCurrentCounting(getCurrentCounting());
     }, [seconds]);
 
     function discountOneMinute(){
@@ -25,7 +29,7 @@ function Counter(props) {
     }
 
     function resetSecondsCountDown(){
-        const secondsToRestartContDown = 10;
+        const secondsToRestartContDown = 59;
         setSeconds(secondsToRestartContDown);
     }
 
@@ -37,9 +41,8 @@ function Counter(props) {
 
     function finishCountDown(){
         clearInterval(secondsIntervalCounting);
-        setMinutes(0);
+        setMinutes(props.focusMinutes);
         setSeconds(0);
-        setCurrentCounting(getCurrentCounting());
     }
 
     function getNumberCountingAux(number) {
@@ -56,7 +59,7 @@ function Counter(props) {
 
     return (
         <div className="counter">
-            <span>{currentCounting}</span>
+            <span>{getCurrentCounting()}</span>
             <button onClick={() => { startCountDown() }}>Start focus</button>
             <button onClick={()=>{finishCountDown()}}>Cancel counter</button>
             <span className="counterStatus">
