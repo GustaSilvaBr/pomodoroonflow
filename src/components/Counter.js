@@ -1,69 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-function Counter(props) {
-    const [minutes, setMinutes] = useState(Number.parseInt(props.focusMinutes));
-    const [seconds, setSeconds] = useState(0);
-    
-    const [secondsIntervalCounting, setSecondsIntervalCounting] = useState();
+function Counter(props){
 
     useEffect(()=>{
-        setMinutes(Number.parseInt(props.focusMinutes));
-    },[props.focusMinutes]);
+        console.log("inOnCounting ",props.isOnCounting);
+    },[props.isOnCounting]);
 
-    useEffect(() => { 
-        const isTheSecondsCountDownFinished = seconds < 0;
-        if(isTheSecondsCountDownFinished){
-            discountOneMinute();
-            const isTheMinutesCountDownFinished = minutes == 0;
-            if(isTheMinutesCountDownFinished){
-                finishCountDown();
-            }else{
-                resetSecondsCountDown();
-            }
-        }
-    }, [seconds]);
 
-    function discountOneMinute(){
-        setMinutes((prevMinutes)=>prevMinutes-1);
-    }
-
-    function resetSecondsCountDown(){
-        const secondsToRestartContDown = 59;
-        setSeconds(secondsToRestartContDown);
-    }
-
-    function startCountDown() {
-        setSecondsIntervalCounting(setInterval(() => {
-            setSeconds((prevSeconds) => prevSeconds - 1);
-        }, 1000))
-    }
-
-    function finishCountDown(){
-        setMinutes(props.focusMinutes);
-        setSeconds(0);
-        clearInterval(secondsIntervalCounting);
-        console.log("restarted");
-    }
-
-    function getNumberCountingAux(number) {
-        let countingAux = number.toString().length > 1 ? "" : "0";
-        return countingAux;
-    }
-
-    function getCurrentCounting() {
-        const minutesAux = getNumberCountingAux(minutes);
-        const secondsAux = getNumberCountingAux(seconds);
-        const currentCounting = `${minutesAux}${minutes}:${secondsAux}${seconds}`;
-        return currentCounting;
-    }
-
-    return (
+    return(
         <div className="counter">
-            <span>{getCurrentCounting()}</span>
-            <button onClick={() => { startCountDown() }}>Start focus</button>
-            <button onClick={()=>{finishCountDown()}}>Cancel counter</button>
-            <span className="counterStatus">
-            </span>
+            <strong>{props.title}</strong>
+            <br/>
+            <span>{props.minutes}</span>:<span>0</span>
         </div>
     )
 }

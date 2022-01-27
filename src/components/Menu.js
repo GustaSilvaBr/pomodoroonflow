@@ -1,40 +1,26 @@
 import React from 'react';
 
-import pomodoroMinutes from '../utils/pomodoroMinutes.json';
+import {CounterContext} from '../providers/CounterProvider';
 
-function Menu(props) {
+function Menu() {
+    const {minutes, setFocusMinutes, setRestMinutes} = React.useContext(CounterContext);
 
-    function setFocusMinutes(minute){
-        props.setFocusMinutes(minute);
-    }
-
-    function setRestMinutes(minute){
-        props.setRestMinutes(minute);
+    function setSession(index){
+        setFocusMinutes(minutes[index].focus);
+        setRestMinutes(minutes[index].rest);
     }
 
     return (
         <div className="Menu">
 
             <div className="chooseMinute">
-                <label htmlFor="focusMinutes">Choose your focus Minutes</label>
-                <select id="focusMinutes" onChange={(event)=>{setFocusMinutes(event.target.value)}}>
+                <label htmlFor="pomodoroSession">Choose session </label>
+                <br/>
+                <select id="pomodoroSession" onChange={(event)=>{setSession(event.target.value)}}>
                     {
-                        pomodoroMinutes.focus.map((minute,index) => {
+                        minutes.map((minute,index) => {
                             return (
-                                <option value={minute} key={index}>{minute} mins</option>
-                            )
-                        })
-                    }
-                </select>
-            </div>
-
-            <div className="chooseMinute">
-                <label htmlFor="restMinutes">Choose your rest minutes</label>
-                <select id="restMinutes" onChange={(event)=>{setRestMinutes(event.target.value)}}>
-                    {
-                        pomodoroMinutes.rest.map((minute,index) => {
-                            return (
-                                <option value={minute} key={index}>{minute} mins</option>
+                                <option value={index} key={index}>{minute.focus}mins || {minute.rest}mins </option>
                             )
                         })
                     }
