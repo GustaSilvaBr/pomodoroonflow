@@ -6,9 +6,12 @@ import { CounterContext } from '../providers/CounterProvider';
 
 function PomodoroCounters(props) {
     const { focusMinutesInCounting,
-        setMinutesInCounting,
+        setFocusMinutesInCounting,
         restMinutesInCounting,
-        setRestMinutesInCounting } = React.useContext(CounterContext);
+        setRestMinutesInCounting,
+        focusMinutesChosen,
+        restMinutesChosen
+     } = React.useContext(CounterContext);
 
     const [focusInterval, setFocusInterval] = useState();
     const [restInterval, setRestInterval] = useState();
@@ -20,22 +23,41 @@ function PomodoroCounters(props) {
 
     useEffect(()=>{
         setIsOnFocusCounting(isOnPomodoro);
-        setIsOnRestCounting(isOnPomodoro);
+        if(!isOnPomodoro){
+            setIsOnRestCounting(isOnPomodoro);
+        }
     },[isOnPomodoro]);
 
+    useEffect(()=>{
+        const isTheMinutesCountDownFinished = focusMinutesInCounting < 0;
+        if(isTheMinutesCountDownFinished){
+            setIsOnFocusCounting(false);
+            setIsOnRestCounting(true);
+        }
+    },[focusMinutesInCounting]);
+
+    useEffect(()=>{
+        const isTheMinutesCountDownFinished = restMinutesInCounting < 0;
+        if(isTheMinutesCountDownFinished){
+            setIsOnFocusCounting(true);
+            setIsOnRestCounting(false);
+        }
+    },[restMinutesInCounting]);
 
     return (
         <div className="pomodorCounters">
             <div className="counters">
                 <Counter
                     minutes={focusMinutesInCounting}
-                    setMinutes={setMinutesInCounting}
+                    setMinutes={setFocusMinutesInCounting}
+                    minutesChosen={focusMinutesChosen}
                     title="Focus Counter"
                     isOnCounting={isOnFocusCounting}
                 />
                 <Counter
                     minutes={restMinutesInCounting}
                     setMinutes={setRestMinutesInCounting}
+                    minutesChosen={restMinutesChosen}
                     title="Rest Counter"
                     isOnCounting={isOnRestCounting}
                 />
