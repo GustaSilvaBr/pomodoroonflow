@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Counter from '../components/Counter';
 import { CounterContext } from '../providers/CounterProvider';
 
-function PomodoroCounters(props) {
+function PomodoroCounters() {
     const { focusMinutesInCounting,
         setFocusMinutesInCounting,
         restMinutesInCounting,
@@ -12,9 +12,6 @@ function PomodoroCounters(props) {
         focusMinutesChosen,
         restMinutesChosen
      } = React.useContext(CounterContext);
-
-    const [focusInterval, setFocusInterval] = useState();
-    const [restInterval, setRestInterval] = useState();
 
     const [isOnFocusCounting, setIsOnFocusCounting] = useState(false);
     const [isOnRestCounting, setIsOnRestCounting] = useState(false);
@@ -45,7 +42,7 @@ function PomodoroCounters(props) {
     },[restMinutesInCounting]);
 
     return (
-        <div className="pomodorCounters">
+        <div className="pomodoroCounters">
             <div className="counters">
                 <Counter
                     minutes={focusMinutesInCounting}

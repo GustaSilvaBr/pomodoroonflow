@@ -1,0 +1,20 @@
+:root{
+    --principal-color:#0A0A0A;
+    --secondary-color:#4E4D57;
+    --background-color:#A3A3A3;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+
+div.App{
+    height: 100vh;
+    width: 100vw;
+
+    background: url('./assets/citygif1.gif') no-repeat center fixed;
+    background-size: cover;
+}
+
