@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react/cjs/react.development';
+import React, { useState, useEffect } from 'react';
 
 import pomodoroMinutes from '../utils/pomodoroMinutes.json';
 
@@ -13,6 +12,10 @@ export const CounterProvider = (props) => {
 
     const [focusMinutesInCounting, setFocusMinutesInCounting] = useState(focusMinutesChosen);
     const [restMinutesInCounting, setRestMinutesInCounting] = useState(restMinutesChosen);
+
+    const [isOnFocusCounting, setIsOnFocusCounting] = useState(false);
+    const [isOnRestCounting, setIsOnRestCounting] = useState(false);
+    const [isOnPomodoro, setIsOnPomodoro] = useState(false);
 
     useEffect(()=>{
         setFocusMinutesInCounting(focusMinutesChosen);
@@ -35,7 +38,11 @@ export const CounterProvider = (props) => {
                 focusMinutesInCounting,
                 setFocusMinutesInCounting,
                 restMinutesInCounting,
-                setRestMinutesInCounting
+                setRestMinutesInCounting,
+
+                isOnFocusCounting, setIsOnFocusCounting,
+                isOnRestCounting, setIsOnRestCounting,
+                isOnPomodoro, setIsOnPomodoro
             }}>
             {props.children}
         </CounterContext.Provider>
