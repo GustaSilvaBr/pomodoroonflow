@@ -43,19 +43,20 @@ function PomodoroCounters() {
 
     return (
         <div className="pomodoroCounters">
+            <h2>Counters</h2>
             <div className="counters">
                 <Counter
                     minutes={focusMinutesInCounting}
                     setMinutes={setFocusMinutesInCounting}
                     minutesChosen={focusMinutesChosen}
-                    title="Focus Counter"
+                    title="Focus"
                     isOnCounting={isOnFocusCounting}
                 />
                 <Counter
                     minutes={restMinutesInCounting}
                     setMinutes={setRestMinutesInCounting}
                     minutesChosen={restMinutesChosen}
-                    title="Rest Counter"
+                    title="Rest"
                     isOnCounting={isOnRestCounting}
                 />
             </div>

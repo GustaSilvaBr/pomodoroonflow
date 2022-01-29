@@ -21,7 +21,7 @@ function Counter(props) {
     }, [seconds]);
 
     function startCountDown() {
-        setSecondsIntervalCounting(setInterval(()=>{
+        setSecondsIntervalCounting(setInterval(() => {
             discountOneSecond();
         }, 1000));
     }
@@ -45,16 +45,17 @@ function Counter(props) {
         props.setMinutes((prevMinutes) => prevMinutes - 1);
     }
 
-    function getFormatedTime(number){
+    function getFormatedTime(number) {
         let countingAux = number.toString().length > 1 ? "" : "0";
         return `${countingAux}${number}`;
     }
 
     return (
         <div className="counter">
-            <strong>{props.title}</strong>
-            <br />
-            <span>{getFormatedTime(props.minutes)}</span>:<span>{getFormatedTime(seconds)}</span>
+            <h3>{props.title}</h3>
+            <div className="time">
+                <span>{getFormatedTime(props.minutes)}</span>:<span>{getFormatedTime(seconds)}</span>
+            </div>
         </div>
     )
 }
