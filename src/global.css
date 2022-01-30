@@ -13,7 +13,7 @@
 div.App{
     height: 100vh;
     width: 100vw;
-
+    
     background: no-repeat center fixed;
     background-size: cover;
 }

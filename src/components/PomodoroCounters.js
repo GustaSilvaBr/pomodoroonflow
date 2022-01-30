@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 
 import Counter from '../components/Counter';
 import { CounterContext } from '../providers/CounterProvider';
+
+import restSoundFile from '../assets/sounds/restSound.wav';
+import focusSoundFile from '../assets/sounds/focusSound.wav';
 
 function PomodoroCounters() {
     const { focusMinutesInCounting,
@@ -16,11 +19,20 @@ function PomodoroCounters() {
         isOnPomodoro, setIsOnPomodoro
     } = React.useContext(CounterContext);
 
+    const restSoundMusic = new Audio(restSoundFile);
+    const focusSoundMusic = new Audio(focusSoundFile);
 
+    function playMusicTwice(music){
+        music.play();
+        music.playbackRate = 2;
+    }
 
 
 
     useEffect(() => {
+        if(!isOnFocusCounting){
+            playMusicTwice(focusSoundMusic);
+        }
         setIsOnFocusCounting(isOnPomodoro);
         if (!isOnPomodoro) {
             setIsOnRestCounting(isOnPomodoro);
@@ -32,6 +44,7 @@ function PomodoroCounters() {
         if (isTheMinutesCountDownFinished) {
             setIsOnFocusCounting(false);
             setIsOnRestCounting(true);
+            playMusicTwice(restSoundMusic);
         }
     }, [focusMinutesInCounting]);
 
@@ -40,6 +53,7 @@ function PomodoroCounters() {
         if (isTheMinutesCountDownFinished) {
             setIsOnFocusCounting(true);
             setIsOnRestCounting(false);
+            playMusicTwice(focusSoundMusic);
         }
     }, [restMinutesInCounting]);
 
