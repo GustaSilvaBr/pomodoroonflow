@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
 
 import Counter from '../components/Counter';
 import { CounterContext } from '../providers/CounterProvider';
@@ -13,11 +12,12 @@ function PomodoroCounters() {
         restMinutesInCounting,
         setRestMinutesInCounting,
         focusMinutesChosen,
-        restMinutesChosen,
-        isOnFocusCounting, setIsOnFocusCounting,
-        isOnRestCounting, setIsOnRestCounting,
-        isOnPomodoro, setIsOnPomodoro
-    } = React.useContext(CounterContext);
+        restMinutesChosen
+     } = React.useContext(CounterContext);
+
+    const [isOnFocusCounting, setIsOnFocusCounting] = useState(false);
+    const [isOnRestCounting, setIsOnRestCounting] = useState(false);
+    const [isOnPomodoro, setIsOnPomodoro] = useState(false);
 
     const restSoundMusic = new Audio(restSoundFile);
     const focusSoundMusic = new Audio(focusSoundFile);
@@ -27,35 +27,33 @@ function PomodoroCounters() {
         music.playbackRate = 2;
     }
 
-
-
     useEffect(() => {
         if(!isOnFocusCounting){
             playMusicTwice(focusSoundMusic);
         }
         setIsOnFocusCounting(isOnPomodoro);
-        if (!isOnPomodoro) {
+        if(!isOnPomodoro){
             setIsOnRestCounting(isOnPomodoro);
         }
-    }, [isOnPomodoro]);
+    },[isOnPomodoro]);
 
-    useEffect(() => {
+    useEffect(()=>{
         const isTheMinutesCountDownFinished = focusMinutesInCounting < 0;
-        if (isTheMinutesCountDownFinished) {
+        if(isTheMinutesCountDownFinished){
             setIsOnFocusCounting(false);
             setIsOnRestCounting(true);
             playMusicTwice(restSoundMusic);
         }
-    }, [focusMinutesInCounting]);
+    },[focusMinutesInCounting]);
 
-    useEffect(() => {
+    useEffect(()=>{
         const isTheMinutesCountDownFinished = restMinutesInCounting < 0;
-        if (isTheMinutesCountDownFinished) {
+        if(isTheMinutesCountDownFinished){
             setIsOnFocusCounting(true);
             setIsOnRestCounting(false);
             playMusicTwice(focusSoundMusic);
         }
-    }, [restMinutesInCounting]);
+    },[restMinutesInCounting]);
 
     return (
         <div className="pomodoroCounters">

@@ -51,9 +51,7 @@ div.chooseMinute > select{
     font-size: 20px;
     font-family: 'Montserrat', sans-serif;
 
-    background-color: #EFEFEF;
     outline-style: none;
-    
 }
 
 div.chooseMinute > select option{
